@@ -1,5 +1,4 @@
 *.sdf
 *.suo
-AnimalsInRun/Debug/
-Debug/
-ipch/
+*/Debug/
+*/ipch/
