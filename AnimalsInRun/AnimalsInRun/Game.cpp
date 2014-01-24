@@ -1,19 +1,14 @@
 #include "Game.h"
-#include<SDL.h>
+
 #include<SDL_image.h>
-#include<SDL_net.h>
 #include <iostream>
 
-using namespace std;
-
-Game::Game()
+Game::Game(const std::string& title)
 {
-	
-	win = SDL_CreateWindow("Animals In Run", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
-	ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	
-	running = true;
+	this->win = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+	this->ren = SDL_CreateRenderer(this->win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
+	this->running = true;
 }
 
 void Game::GetEvents()
@@ -21,13 +16,13 @@ void Game::GetEvents()
 	SDL_Event occur;
 	while(SDL_PollEvent(&occur))
 	{
-		if(occur.type==SDL_QUIT)
+		if(occur.type == SDL_QUIT)
 		{
-			running = false;
+			this->running = false;
 		}
-		if(occur.type== SDL_KEYDOWN)
+		if(occur.type == SDL_KEYDOWN)
 		{
-			switch (occur.key.keysym.sym)
+			switch(occur.key.keysym.sym)
 			{
 			default:
 				break;
@@ -43,34 +38,32 @@ void Game::InitEverything()
 	SDLNet_Init();
 }
 
-SDL_Texture* Game::LoadImage(char* filename)
+SDL_Texture* Game::LoadImage(const std::string& filename)
 {
-	SDL_Surface *image = IMG_Load(filename);
-	SDL_Texture *texture = SDL_CreateTextureFromSurface(ren, image);
-    SDL_FreeSurface(image);
+	SDL_Surface* image = IMG_Load(filename.c_str());
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(this->ren, image);
+	SDL_FreeSurface(image);
 	return texture;
-
 }
 
 void Game::Run()
 {
-	
-	while(running)
+	while(this->running)
 	{
-		GetEvents();
-
+		this->GetEvents();
 	}
 }
 
-
-
 Game::~Game()
 {
-    SDL_DestroyRenderer(ren);
-	SDL_DestroyWindow(win);
+	SDL_DestroyRenderer(this->ren);
+	SDL_DestroyWindow(this->win);
 
 	SDLNet_Quit();
 	IMG_Quit();
 	SDL_Quit();
-	
+}
+
+void LogSdlError(const std::string& msg) {
+	std::cerr << msg << " error: " << SDL_GetError() << std::endl;
 }

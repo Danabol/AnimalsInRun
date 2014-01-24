@@ -1,10 +1,9 @@
 #include "Game.h"
 
-
 int main(int argc, char * args[])
 {
-	Game g;
-	g.Run();
+	Game game("Animals In Run");
+	game.Run();
 
 	return 0;
 }
