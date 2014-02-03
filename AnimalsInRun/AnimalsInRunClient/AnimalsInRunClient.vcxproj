@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{868942D8-9489-41EE-B557-F6DD7894D3D8}</ProjectGuid>
-    <RootNamespace>AnimalsInRun</RootNamespace>
+    <ProjectGuid>{25285094-6327-47BC-BB11-B655A70F8ABD}</ProjectGuid>
+    <RootNamespace>AnimalsInRunClient</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -39,8 +39,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\..\SDL2_image-devel-2.0.0-VC\SDL2_image-2.0.0\include;..\..\..\SDL2_net-devel-2.0.0-VC\SDL2_net-2.0.0\include;..\..\..\SDL2-devel-2.0.1-VC\SDL2-2.0.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\SDL2_image-devel-2.0.0-VC\SDL2_image-2.0.0\lib\x86;..\..\..\SDL2_net-devel-2.0.0-VC\SDL2_net-2.0.0\lib\x86;..\..\..\SDL2-devel-2.0.1-VC\SDL2-2.0.1\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\SDL2-devel-2.0.1-VC\SDL2-2.0.1\include;..\..\..\SDL2_net-devel-2.0.0-VC\SDL2_net-2.0.0\include;..\..\..\SDL2_image-devel-2.0.0-VC\SDL2_image-2.0.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\SDL2_net-devel-2.0.0-VC\SDL2_net-2.0.0\lib\x86;..\..\..\SDL2-devel-2.0.1-VC\SDL2-2.0.1\lib\x86;..\..\..\SDL2_image-devel-2.0.0-VC\SDL2_image-2.0.0\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -67,11 +67,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Client.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h" />
+    <ClInclude Include="Client.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

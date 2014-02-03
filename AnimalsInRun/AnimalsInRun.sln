@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimalsInRun", "AnimalsInRun\AnimalsInRun.vcxproj", "{868942D8-9489-41EE-B557-F6DD7894D3D8}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnimalsInRunClient", "AnimalsInRunClient\AnimalsInRunClient.vcxproj", "{25285094-6327-47BC-BB11-B655A70F8ABD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +15,10 @@ Global
 		{868942D8-9489-41EE-B557-F6DD7894D3D8}.Debug|Win32.Build.0 = Debug|Win32
 		{868942D8-9489-41EE-B557-F6DD7894D3D8}.Release|Win32.ActiveCfg = Release|Win32
 		{868942D8-9489-41EE-B557-F6DD7894D3D8}.Release|Win32.Build.0 = Release|Win32
+		{25285094-6327-47BC-BB11-B655A70F8ABD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{25285094-6327-47BC-BB11-B655A70F8ABD}.Debug|Win32.Build.0 = Debug|Win32
+		{25285094-6327-47BC-BB11-B655A70F8ABD}.Release|Win32.ActiveCfg = Release|Win32
+		{25285094-6327-47BC-BB11-B655A70F8ABD}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

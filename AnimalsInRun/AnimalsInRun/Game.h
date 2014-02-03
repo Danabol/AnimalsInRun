@@ -2,6 +2,8 @@
 #include <SDL_net.h>
 #include <string>
 
+
+
 class Game
 {
 private:
@@ -12,11 +14,15 @@ private:
 	bool running;
 	SDL_Window *win;
 	SDL_Renderer *ren;
+	IPaddress ip;
+	TCPsocket server ;
+	TCPsocket client;
 
 	//methods
 	void InitEverything();
 	void GetEvents();
 	void Render();
+	void Server();
 	SDL_Texture* LoadImage(const std::string& filename);
 
 public:
