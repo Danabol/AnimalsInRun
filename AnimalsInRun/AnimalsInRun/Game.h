@@ -1,38 +1,14 @@
-#include <SDL.h>
-#include <SDL_net.h>
-#include <string>
+#ifndef GAME_HPP
+#define GAME_HPP
 
+#include "_.h"
 
-
-class Game
-{
-private:
-	const static int DEFAULT_WINDOW_WIDTH = 360;
-	const static int DEFAULT_WINDOW_HEIGHT = 480;
-
-	//variables
-	bool running;
-	SDL_Window *win;
-	SDL_Renderer *ren;
-	IPaddress ip;
-	TCPsocket server ;
-	TCPsocket client;
-
-	//methods
-	void InitEverything();
-	void GetEvents();
-	void Render();
-	void Server();
-	SDL_Texture* LoadImage(const std::string& filename);
-
+class Game {
 public:
-	Game(const std::string& title);
+	Game();
 	~Game();
 
-	//variables
-
-	//methods
 	void Run();
 };
 
-void LogSdlError(const std::string& msg);
+#endif // GAME_HPP

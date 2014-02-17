@@ -1,9 +1,8 @@
-#include "Game.h"
+#include "_.h"
 
-int main(int argc, char * args[])
-{
-	Game game("Animals In Run");
+#undef main
+int main(int argc, char* args[]) {
+	Game game;
 	game.Run();
-
 	return 0;
 }
