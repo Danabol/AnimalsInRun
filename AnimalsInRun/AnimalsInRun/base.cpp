@@ -1,4 +1,4 @@
-#include "base.h"
+#include "base.hpp"
 
 void LogError(const std::string& msg) {
 	std::cerr << msg << " error: " << std::endl;

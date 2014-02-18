@@ -1,7 +1,7 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-#include "_.h"
+#include "_.hpp"
 
 class Game {
 public:

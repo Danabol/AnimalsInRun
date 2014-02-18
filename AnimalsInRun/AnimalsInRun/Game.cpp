@@ -1,4 +1,6 @@
-#include "game.h"
+#include "game.hpp"
+
+#include "level.hpp"
 
 Game::Game() {
 	if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
@@ -24,8 +26,11 @@ void Game::Run() {
 	bool quit = false;
 	Settings settings;
 	ViewerSdl viewer; viewer.Init(settings.title);
+	SDL_Renderer* renderer = viewer.GetRenderer();
 
 	// TODO: Init somes.
+	SDL_Texture* texture = viewer.CreateTexture("./resources/entity.bmp");
+	Level level(10, 1, true);
 
 	while(!quit) {
 		SDL_Event sdl_event;
@@ -40,14 +45,22 @@ void Game::Run() {
 			}
 
 			// TODO: somes.Event(sdl_event);
-
 		}
 
 		viewer.ClearViewer();
 
 		// TODO: somes.DoStep();
+		level.DoStep();
+		
+		if(renderer) {
+			// TODO: somes.Draw(renderer);
+			level.Draw(renderer, texture);
+		}
 
 		viewer.EndDraw();
 	}
 	//client.Clear();
+	if(texture) {
+		viewer.ReleaseTexture(texture);	texture = nullptr;
+	}
 }

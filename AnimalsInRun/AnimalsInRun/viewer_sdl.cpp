@@ -1,4 +1,4 @@
-#include "viewer_sdl.h"
+#include "viewer_sdl.hpp"
 
 ViewerSdl::ViewerSdl()
 	: window(nullptr), renderer(nullptr) {
@@ -35,6 +35,10 @@ void ViewerSdl::Init(const std::string& title) {
 	}
 }
 
+SDL_Renderer* ViewerSdl::GetRenderer() {
+	return this->renderer;
+}
+
 void ViewerSdl::ClearViewer() {
 	SDL_RenderClear(this->renderer);
 }
@@ -43,7 +47,7 @@ void ViewerSdl::EndDraw() {
 	SDL_RenderPresent(this->renderer);
 }
 
-SDL_Texture* ViewerSdl::CreateTexture(const std::string& filename) {
+SDL_Texture* ViewerSdl::CreateTexture(const std::string& filename) const {
 	SDL_Surface* loadedImage = SDL_LoadBMP(filename.c_str());
 	if(!loadedImage) {
 		LogSdlError("SDL_LoadBMP");
@@ -65,14 +69,20 @@ void ViewerSdl::ReleaseTexture(SDL_Texture* texture) {
 	}
 }
 
-void ViewerSdl::DrawTexture(SDL_Texture* texture, int x, int y) {
-	SDL_Rect rect;
-	rect.x = x; rect.y = y;
+void ViewerSdl::DrawTexture(SDL_Texture* texture, int x, int y) const {
+	SDL_Rect rect; rect.x = x; rect.y = y;
 	SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
 	SDL_RenderCopy(this->renderer, texture, NULL, &rect);
 }
 
-SDL_Texture* ViewerSdl::CreateTextTexture(std::string text, std::string fontFile, SDL_Color color, int fontSize) {
+void ViewerSdl::DrawRoundTexture(SDL_Texture* texture, int x, int y, int r, double a) const {
+	SDL_Point point; point.x = x; point.y = y;
+	SDL_Rect rect; rect.x = x - r; rect.y = y - r;
+	SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+	SDL_RenderCopyEx(this->renderer, texture, NULL, &rect, a, &point, SDL_FLIP_NONE);
+}
+
+SDL_Texture* ViewerSdl::CreateTextTexture(std::string text, std::string fontFile, SDL_Color color, int fontSize) const {
     TTF_Font *font = TTF_OpenFont(fontFile.c_str(), fontSize);
     if(!font) {
 		LogTtfError("TTF_OpenFont");

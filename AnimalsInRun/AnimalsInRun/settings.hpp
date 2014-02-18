@@ -1,7 +1,7 @@
 #ifndef SETTINGS_HPP
 #define SETTINGS_HPP
 
-#include "_.h"
+#include "_.hpp"
 
 const std::string DEFAULT_TITLE = "Test";
 
