@@ -5,7 +5,7 @@ Level::Level(uint8_t count, uint8_t index, bool random_init)
 	this->heroes.resize(count);
 	this->index = index;
 	if(random_init) {
-		for(int i = 0; i < this->heroes.size(); ++i) {
+		for(size_t i = 0; i < this->heroes.size(); ++i) {
 			this->heroes[i].angle = rand() % 360;
 			this->heroes[i].px = 1.0f * rand() / RAND_MAX * this->size_x;
 			this->heroes[i].py = 1.0f * rand() / RAND_MAX * this->size_y;
@@ -41,7 +41,7 @@ void collision(Entity& entity_i, Entity& entity_j)
 }
 
 void Level::DoStep() {
-	for(int i = 0; i < this->heroes.size(); ++i) {
+	for(size_t i = 0; i < this->heroes.size(); ++i) {
 		if(i == this->index) {
 			this->heroes[i].Hero::DoStep();
 		}
@@ -63,7 +63,7 @@ void Level::DoStep() {
 
 void Level::Draw(SDL_Renderer* renderer, SDL_Texture* texture) const {
 	Hero hero;
-	for(int i = 0; i < this->heroes.size(); ++i) {
+	for(size_t i = 0; i < this->heroes.size(); ++i) {
 		hero = this->heroes[i];
 		float x = hero.px - this->heroes[this->index].px;
 		float y = hero.py - this->heroes[this->index].py;
