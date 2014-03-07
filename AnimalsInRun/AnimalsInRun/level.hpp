@@ -3,6 +3,7 @@
 
 #include "_.hpp"
 #include "hero.hpp"
+#include "map.hpp"
 
 class Level {
 private:
@@ -11,6 +12,8 @@ private:
 	uint8_t index;
 
 	float screen_center_x, screen_center_y;
+
+	Map map;
 
 public:
 	Level(uint8_t count = 1, uint8_t index = 0, bool random_init = false);

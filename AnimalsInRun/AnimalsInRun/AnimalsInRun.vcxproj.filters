@@ -39,6 +39,9 @@
     <ClInclude Include="level.hpp">
       <Filter>Screens</Filter>
     </ClInclude>
+    <ClInclude Include="map.hpp">
+      <Filter>Screens</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base.cpp">
@@ -60,6 +63,9 @@
       <Filter>Entities</Filter>
     </ClCompile>
     <ClCompile Include="level.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="map.cpp">
       <Filter>Screens</Filter>
     </ClCompile>
   </ItemGroup>

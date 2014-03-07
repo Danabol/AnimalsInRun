@@ -2,13 +2,15 @@
 
 Level::Level(uint8_t count, uint8_t index, bool random_init)
 	: size_x(DEFAULT_SIZE_X), size_y(DEFAULT_SIZE_Y), screen_center_x(0.5f * DEFAULT_SIZE_X), screen_center_y(0.5f * DEFAULT_SIZE_Y) {
+
 	this->heroes.resize(count);
 	this->index = index;
 	if(random_init) {
-		for(int i = 0; i < this->heroes.size(); ++i) {
-			this->heroes[i].angle = rand() % 360;
-			this->heroes[i].px = 1.0f * rand() / RAND_MAX * this->size_x;
-			this->heroes[i].py = 1.0f * rand() / RAND_MAX * this->size_y;
+		for(auto it = this->heroes.begin(); it < this->heroes.end(); ++it) {
+			it->angle = static_cast<float>(rand() % 360);
+			it->px = 1.0f * rand() / RAND_MAX * this->size_x;
+			it->py = 1.0f * rand() / RAND_MAX * this->size_y;
+			this->map.Inits(static_cast<Entity*>(it._Ptr));
 		}
 	}
 }
@@ -16,54 +18,42 @@ Level::Level(uint8_t count, uint8_t index, bool random_init)
 Level::~Level() {
 }
 
-void collision(Entity& entity_i, Entity& entity_j)
-{
-	float vx = entity_j.px - entity_i.px;
-    float vy = entity_j.py - entity_i.py;
-    float d = std::sqrt(vx * vx + vy * vy);
-    float r = entity_j.r + entity_i.r;
-
-    if (EPS < d && d < r - EPS)
-    {
-        float coef = 0.5f * (r / d - 1);
-
-        vx *= coef;
-        vy *= coef;
-
-        entity_j.px += vx;
-        entity_j.py += vy;
-        entity_i.px -= vx;
-        entity_i.py -= vy;
-
-        //entity_j.isCollide = true;
-        //entity_i.isCollide = true;
-    }
-}
-
 void Level::DoStep() {
-	for(int i = 0; i < this->heroes.size(); ++i) {
+	for(size_t i = 0; i < this->heroes.size(); ++i) {
 		if(i == this->index) {
 			this->heroes[i].Hero::DoStep();
 		}
 		else {
 			this->heroes[i].Entity::DoStep();
 		}
-		//if(this->xs[i] < 0 || this->size_x < this->xs[i] || this->ys[i] < 0 || this->size_y < this->ys[i]) {
-		//	this->as[i] = rand() % 360;
-		//	this->xs[i] = 1.0f * rand() / RAND_MAX * this->size_x;
-		//	this->ys[i] = 1.0f * rand() / RAND_MAX * this->size_y;
+
+		//if(this->heroes[i].px < 0 || this->size_x < this->heroes[i].px || this->heroes[i].py < 0 || this->size_y < this->heroes[i].py) {
+		//	this->heroes[i].angle = rand() % 360;
+		//	this->heroes[i].px = 1.0f * rand() / RAND_MAX * this->size_x;
+		//	this->heroes[i].py = 1.0f * rand() / RAND_MAX * this->size_y;
 		//}
+	
+		this->map.Updates(&(this->heroes[i]));
 	}
-	for(int i = 0; i < this->heroes.size() - 1; ++i) {
-		for(int j = i + 1; j < this->heroes.size(); ++j) {
-			collision(this->heroes[i], this->heroes[j]);
-		}
+
+	//for(size_t i = 0; i < this->heroes.size() - 1; ++i) {
+	//	for(size_t j = i + 1; j < this->heroes.size(); ++j) {
+	//		collision(this->heroes[i], this->heroes[j]);
+	//	}
+	//}
+
+	for(int i = 0; i < this->heroes.size(); ++i) {
+		this->map.CheckCollision(&(this->heroes[i]));
+	}
+
+	for(int i = 0; i < this->heroes.size(); ++i) {
+		this->map.Updates(&(this->heroes[i]));
 	}
 }
 
 void Level::Draw(SDL_Renderer* renderer, SDL_Texture* texture) const {
 	Hero hero;
-	for(int i = 0; i < this->heroes.size(); ++i) {
+	for(size_t i = 0; i < this->heroes.size(); ++i) {
 		hero = this->heroes[i];
 		float x = hero.px - this->heroes[this->index].px;
 		float y = hero.py - this->heroes[this->index].py;

@@ -10,7 +10,12 @@ public:
 	float angle;
 	float speed;
 
+public: //CircleEntity
 	float r;
+
+public: // Entity
+	uint16_t i;
+	uint8_t j;
 
 public:
 	Entity();
@@ -18,6 +23,8 @@ public:
 
 	void DoStep();
 };
+
+void collision(Entity& entity_i, Entity& entity_j);
 
 const float DEFAULT_ANGLE_STEP = 3.0f;
 const int DEFAULT_RADIUS = 16;
