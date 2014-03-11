@@ -26,6 +26,7 @@ void Game::Run() {
 	bool quit = false;
 	Settings settings;
 	ViewerSdl viewer; viewer.Init(settings.title);
+	SDL_Renderer* renderer = viewer.GetRenderer();
 
 	// TODO: Init somes.
 	SDL_Texture* texture = viewer.CreateTexture("./resources/entity.bmp");
@@ -57,8 +58,10 @@ void Game::Run() {
 		// TODO: somes.DoStep();
 		level.DoStep();
 		
-		level.Draw(viewer, texture);
-		// TODO: somes.Draw(viewer);
+		if(renderer) {
+			level.Draw(renderer, texture);
+			// TODO: somes.Draw(viewer);
+		}
 
 		viewer.EndDraw();
 	}

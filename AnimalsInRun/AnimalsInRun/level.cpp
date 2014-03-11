@@ -51,22 +51,41 @@ void Level::DoStep() {
 	}
 }
 
-void Level::Draw(const ViewerSdl& viewer, SDL_Texture* texture) const {
-	this->map_viewer.DrawMap(viewer);
-
-	SDL_Renderer* renderer = viewer.GetRenderer();
+void Level::Draw(SDL_Renderer* renderer, SDL_Texture* texture) const {
 	if(renderer) {
+		const Hero& hero_current = this->heroes[this->index];
 		Hero hero;
+		if(this->map_viewer.map) {
+			for (int i = 0; i < this->map_viewer.height; i++) {
+				for (int j = 0; j < this->map_viewer.width; j++) {
+					if(this->map_viewer.map[i][j]) {
+						hero.px = i * DEFAULT_BLOCK_SIZE;
+						hero.py = j * DEFAULT_BLOCK_SIZE;
+						hero.angle = 0;
+						float x = hero.px - hero_current.px;
+						float y = hero.py - hero_current.py;
+						float angle_rad = hero_current.angle * TO_RAD;
+						hero.px = std::sin(angle_rad) * x - std::cos(angle_rad) * y;
+						hero.py = std::cos(angle_rad) * x + std::sin(angle_rad) * y;
+						hero.px += this->screen_center_x;
+						hero.py += this->screen_center_y;
+						hero.angle -= hero_current.angle;
+						hero.Draw(renderer, this->map_viewer.textures[this->map_viewer.map[i][j] - 1]);
+					}
+				}
+			}
+		}
+
 		for(size_t i = 0; i < this->heroes.size(); ++i) {
 			hero = this->heroes[i];
-			float x = hero.px - this->heroes[this->index].px;
-			float y = hero.py - this->heroes[this->index].py;
-			float angle_rad = this->heroes[this->index].angle * TO_RAD;
+			float x = hero.px - hero_current.px;
+			float y = hero.py - hero_current.py;
+			float angle_rad = hero_current.angle * TO_RAD;
 			hero.px = std::sin(angle_rad) * x - std::cos(angle_rad) * y;
 			hero.py = std::cos(angle_rad) * x + std::sin(angle_rad) * y;
 			hero.px += this->screen_center_x;
 			hero.py += this->screen_center_y;
-			hero.angle -= this->heroes[this->index].angle;
+			hero.angle -= hero_current.angle;
 			hero.Draw(renderer, texture);
 		}
 	}

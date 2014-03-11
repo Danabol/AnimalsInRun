@@ -55,15 +55,3 @@ void MapViewer::LoadMap(const ViewerSdl& viewer, const std::string& filename)
 		std::cout << " " << std::endl; // TODO: Test code. Remove.
 	}
 }
-
-void MapViewer::DrawMap(const ViewerSdl& viewer) const {
-	if(this->map) {
-		for (int i = 0; i < this->height; i++) {
-			for (int j = 0; j < this->width; j++) {
-				if(this->map[i][j]) {
-					viewer.DrawTexture(this->textures[map[i][j] - 1], i * DEFAULT_BLOCK_SIZE, j * DEFAULT_BLOCK_SIZE);
-				}
-			}
-		}
-	}
-}

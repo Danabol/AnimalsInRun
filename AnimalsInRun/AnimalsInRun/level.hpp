@@ -22,7 +22,7 @@ public:
 	~Level();
 
 	void DoStep();
-	void Draw(const ViewerSdl& viewer, SDL_Texture* texture) const;
+	void Draw(SDL_Renderer* renderer, SDL_Texture* texture) const;
 
 	void LoadMap(const ViewerSdl& viewer, const std::string& filename);
 
