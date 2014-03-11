@@ -42,6 +42,9 @@
     <ClInclude Include="map.hpp">
       <Filter>Screens</Filter>
     </ClInclude>
+    <ClInclude Include="map_viewer.h">
+      <Filter>Others</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base.cpp">
@@ -67,6 +70,9 @@
     </ClCompile>
     <ClCompile Include="map.cpp">
       <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="map_viewer.cpp">
+      <Filter>Others</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

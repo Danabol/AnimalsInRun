@@ -17,6 +17,7 @@
     <ClInclude Include="hero.hpp" />
     <ClInclude Include="level.hpp" />
     <ClInclude Include="map.hpp" />
+    <ClInclude Include="map_viewer.h" />
     <ClInclude Include="settings.hpp" />
     <ClInclude Include="viewer_sdl.hpp" />
     <ClInclude Include="_.hpp" />
@@ -29,6 +30,7 @@
     <ClCompile Include="level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
+    <ClCompile Include="map_viewer.cpp" />
     <ClCompile Include="viewer_sdl.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
