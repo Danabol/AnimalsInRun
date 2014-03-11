@@ -1,5 +1,7 @@
 #include "level.hpp"
 
+#include "entity_viewer.hpp"
+
 Level::Level(uint8_t count, uint8_t index, bool random_init)
 	: size_x(DEFAULT_SIZE_X), size_y(DEFAULT_SIZE_Y), screen_center_x(0.5f * DEFAULT_SIZE_X), screen_center_y(0.5f * DEFAULT_SIZE_Y) {
 
@@ -10,7 +12,7 @@ Level::Level(uint8_t count, uint8_t index, bool random_init)
 				it->angle = static_cast<float>(rand() % 360);
 				it->px = 1.0f * rand() / RAND_MAX * this->size_x;
 				it->py = 1.0f * rand() / RAND_MAX * this->size_y;
-				this->map.Inits(static_cast<Entity*>(it._Ptr));
+				this->map.Inits(static_cast<Entity*>(&it[0]));
 			}
 		}
 }
@@ -42,51 +44,33 @@ void Level::DoStep() {
 	//	}
 	//}
 
-	for(int i = 0; i < this->heroes.size(); ++i) {
+	for(size_t i = 0; i < this->heroes.size(); ++i) {
 		this->map.CheckCollision(&(this->heroes[i]));
 	}
 
-	for(int i = 0; i < this->heroes.size(); ++i) {
+	for(size_t i = 0; i < this->heroes.size(); ++i) {
 		this->map.Updates(&(this->heroes[i]));
 	}
 }
 
 void Level::Draw(SDL_Renderer* renderer, SDL_Texture* texture) const {
 	if(renderer) {
-		const Hero& hero_current = this->heroes[this->index];
-		Hero hero;
-		if(this->map_viewer.map) {
-			for (int i = 0; i < this->map_viewer.height; i++) {
-				for (int j = 0; j < this->map_viewer.width; j++) {
-					if(this->map_viewer.map[i][j]) {
-						hero.px = i * DEFAULT_BLOCK_SIZE;
-						hero.py = j * DEFAULT_BLOCK_SIZE;
-						hero.angle = 0;
-						float x = hero.px - hero_current.px;
-						float y = hero.py - hero_current.py;
-						float angle_rad = hero_current.angle * TO_RAD;
-						hero.px = std::sin(angle_rad) * x - std::cos(angle_rad) * y;
-						hero.py = std::cos(angle_rad) * x + std::sin(angle_rad) * y;
-						hero.px += this->screen_center_x;
-						hero.py += this->screen_center_y;
-						hero.angle -= hero_current.angle;
-						hero.Draw(renderer, this->map_viewer.textures[this->map_viewer.map[i][j] - 1]);
-					}
-				}
-			}
-		}
+		const Hero& hero = this->heroes[this->index];
+		this->map_viewer.DrawMap(renderer, hero, this->screen_center_x, this->screen_center_y);
 
-		for(size_t i = 0; i < this->heroes.size(); ++i) {
-			hero = this->heroes[i];
-			float x = hero.px - hero_current.px;
-			float y = hero.py - hero_current.py;
-			float angle_rad = hero_current.angle * TO_RAD;
-			hero.px = std::sin(angle_rad) * x - std::cos(angle_rad) * y;
-			hero.py = std::cos(angle_rad) * x + std::sin(angle_rad) * y;
-			hero.px += this->screen_center_x;
-			hero.py += this->screen_center_y;
-			hero.angle -= hero_current.angle;
-			hero.Draw(renderer, texture);
+		float angle_rad = hero.angle * TO_RAD;
+		float sin_angle_rad = std::sin(angle_rad);
+		float cos_angle_rad = std::cos(angle_rad);
+
+		EntityViewer entity_viewer;
+		for(auto it = this->heroes.begin(); it < this->heroes.end(); ++it) {
+			entity_viewer.r = it->r;
+			float x = it->px - hero.px;
+			float y = it->py - hero.py;;
+			entity_viewer.px = this->screen_center_x + sin_angle_rad * x - cos_angle_rad * y;
+			entity_viewer.py = this->screen_center_x + cos_angle_rad * x + sin_angle_rad * y;
+			entity_viewer.angle = it->angle - hero.angle;
+			entity_viewer.Draw(renderer, texture);
 		}
 	}
 }
