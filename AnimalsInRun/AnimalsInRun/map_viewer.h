@@ -18,6 +18,6 @@ private:
 	int** map;
 };
 
-const uint8_t DEFAULT_BLOCK_SIZE = 32;
+const uint8_t DEFAULT_BLOCK_SIZE = 64;
 
 #endif // MAP_VIEWER_H
