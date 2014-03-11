@@ -9,7 +9,7 @@ public:
 	~MapViewer();
 	void LoadMap(const ViewerSdl& viewer, const std::string& filename);
 	void ReleaseMap();
-	void DrawMap(const ViewerSdl& viewer);
+	void DrawMap(const ViewerSdl& viewer) const;
 
 private:
 	std::vector<SDL_Texture*> textures;
