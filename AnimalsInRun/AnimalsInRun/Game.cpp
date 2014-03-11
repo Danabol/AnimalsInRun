@@ -1,6 +1,7 @@
 #include "game.hpp"
 
 #include "level.hpp"
+#include "map_viewer.h"
 
 Game::Game() {
 	if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
@@ -27,6 +28,8 @@ void Game::Run() {
 	Settings settings;
 	ViewerSdl viewer; viewer.Init(settings.title);
 	SDL_Renderer* renderer = viewer.GetRenderer();
+
+	MapViewer map_viewer; map_viewer.LoadMap(viewer, "./resources/map.txt"); // TODO: Test code.
 
 	// TODO: Init somes.
 	SDL_Texture* texture = viewer.CreateTexture("./resources/entity.bmp");
@@ -58,6 +61,7 @@ void Game::Run() {
 		if(renderer) {
 			// TODO: somes.Draw(renderer);
 			level.Draw(renderer, texture);
+			map_viewer.DrawMap(viewer); // TODO: Test code.
 		}
 
 		viewer.EndDraw();

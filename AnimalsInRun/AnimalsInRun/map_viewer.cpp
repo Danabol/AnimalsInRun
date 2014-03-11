@@ -14,7 +14,7 @@ void MapViewer::ReleaseMap() {
 	for each(auto texture in this->textures) {
 		ViewerSdl::ReleaseTexture(texture);
 	}
-	if(!this->map) {
+	if(this->map) {
 		for(uint32_t i = 0; i < this->height; ++i) {
 			if(this->map[i]) {
 				delete[] this->map[i];
@@ -31,7 +31,7 @@ void MapViewer::LoadMap(const ViewerSdl& viewer, const std::string& filename)
 	this->ReleaseMap();
 
 	std::ifstream input(filename);
-	uint8_t textures_count;
+	uint32_t textures_count;
 	input >> textures_count;
 	std::string file_path;
 	for(uint8_t i = 0; i < textures_count; ++i) {
@@ -57,10 +57,12 @@ void MapViewer::LoadMap(const ViewerSdl& viewer, const std::string& filename)
 }
 
 void MapViewer::DrawMap(const ViewerSdl& viewer) {
-	if(!this->map) {
+	if(this->map) {
 		for (int i = 0; i < this->width; i++) {
 			for (int j = 0; j < this->height; j++) {
-				viewer.DrawTexture(this->textures[map[i][j]], i * DEFAULT_BLOCK_SIZE, j * DEFAULT_BLOCK_SIZE);
+				if(this->map[i][j]) {
+					viewer.DrawTexture(this->textures[map[i][j] - 1], i * DEFAULT_BLOCK_SIZE, j * DEFAULT_BLOCK_SIZE);
+				}
 			}
 		}
 	}
