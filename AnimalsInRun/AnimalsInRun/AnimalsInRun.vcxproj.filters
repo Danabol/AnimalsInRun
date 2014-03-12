@@ -45,6 +45,9 @@
     <ClInclude Include="map_viewer.h">
       <Filter>Others</Filter>
     </ClInclude>
+    <ClInclude Include="entity_viewer.hpp">
+      <Filter>Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base.cpp">
@@ -73,6 +76,9 @@
     </ClCompile>
     <ClCompile Include="map_viewer.cpp">
       <Filter>Others</Filter>
+    </ClCompile>
+    <ClCompile Include="entity_viewer.cpp">
+      <Filter>Entities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
