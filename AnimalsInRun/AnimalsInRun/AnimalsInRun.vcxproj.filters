@@ -33,19 +33,19 @@
     <ClInclude Include="entity.hpp">
       <Filter>Entities</Filter>
     </ClInclude>
-    <ClInclude Include="hero.hpp">
+    <ClInclude Include="level.hpp">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="entity_viewer.hpp">
       <Filter>Entities</Filter>
     </ClInclude>
-    <ClInclude Include="level.hpp">
+    <ClInclude Include="collision_controller.hpp">
       <Filter>Screens</Filter>
     </ClInclude>
     <ClInclude Include="map.hpp">
       <Filter>Screens</Filter>
     </ClInclude>
-    <ClInclude Include="map_viewer.h">
-      <Filter>Others</Filter>
-    </ClInclude>
-    <ClInclude Include="entity_viewer.hpp">
+    <ClInclude Include="entity_controller.hpp">
       <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
@@ -65,19 +65,19 @@
     <ClCompile Include="entity.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
-    <ClCompile Include="hero.cpp">
+    <ClCompile Include="level.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="entity_viewer.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
-    <ClCompile Include="level.cpp">
+    <ClCompile Include="collision_controller.cpp">
       <Filter>Screens</Filter>
     </ClCompile>
     <ClCompile Include="map.cpp">
       <Filter>Screens</Filter>
     </ClCompile>
-    <ClCompile Include="map_viewer.cpp">
-      <Filter>Others</Filter>
-    </ClCompile>
-    <ClCompile Include="entity_viewer.cpp">
+    <ClCompile Include="entity_controller.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
   </ItemGroup>

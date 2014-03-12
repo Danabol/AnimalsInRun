@@ -26,8 +26,8 @@ public:
 
 void collision(Entity& entity_i, Entity& entity_j);
 
-const float DEFAULT_ANGLE_STEP = 3.0f;
+const float DEFAULT_ANGLE_STEP = 1.0f;
 const float DEFAULT_RADIUS = 16.0f;
-const float DEFAULT_SPEED = 3.0f;
+const float DEFAULT_SPEED = 1.0f;
 
 #endif // ENTITY_H

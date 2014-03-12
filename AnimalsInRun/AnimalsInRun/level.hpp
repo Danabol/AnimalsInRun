@@ -2,20 +2,22 @@
 #define LEVEL_H
 
 #include "_.hpp"
-#include "hero.hpp"
 #include "map.hpp"
-#include "map_viewer.h"
+#include "entity.hpp"
+#include "entity_controller.hpp"
+#include "collision_controller.hpp"
 
 class Level {
 private:
 	float size_x, size_y;
-	std::vector<Hero> heroes;
-	uint8_t index;
-
 	float screen_center_x, screen_center_y;
 
 	Map map;
-	MapViewer map_viewer;
+
+	std::vector<Entity> entities;
+	EntityController entity_controller;
+
+	CollisionController collision_controller;
 
 public:
 	Level(uint8_t count = 1, uint8_t index = 0, bool random_init = false);

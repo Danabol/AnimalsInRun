@@ -15,10 +15,10 @@
     <ClInclude Include="entity.hpp" />
     <ClInclude Include="entity_viewer.hpp" />
     <ClInclude Include="game.hpp" />
-    <ClInclude Include="hero.hpp" />
+    <ClInclude Include="entity_controller.hpp" />
     <ClInclude Include="level.hpp" />
+    <ClInclude Include="collision_controller.hpp" />
     <ClInclude Include="map.hpp" />
-    <ClInclude Include="map_viewer.h" />
     <ClInclude Include="settings.hpp" />
     <ClInclude Include="viewer_sdl.hpp" />
     <ClInclude Include="_.hpp" />
@@ -28,11 +28,11 @@
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="entity_viewer.cpp" />
     <ClCompile Include="game.cpp" />
-    <ClCompile Include="hero.cpp" />
+    <ClCompile Include="entity_controller.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="collision_controller.cpp" />
     <ClCompile Include="map.cpp" />
-    <ClCompile Include="map_viewer.cpp" />
     <ClCompile Include="viewer_sdl.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
