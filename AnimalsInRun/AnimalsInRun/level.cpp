@@ -37,16 +37,7 @@ void Level::DoStep() {
 		//}
 	}
 
-	//for(size_t i = 0; i < this->entities.size() - 1; ++i) {
-	//	for(size_t j = i + 1; j < this->entities.size(); ++j) {
-	//		collision(this->entities[i], this->entities[j]);
-	//	}
-	//}
-
-	for(auto it = this->entities.begin(); it < this->entities.end(); ++it) {
-		this->collision_controller.CheckCollision(&(*it));
-	}
-	// TODO: this->collision_controller.Updates(this->entities);
+	this->collision_controller.Updates(this->entities);
 }
 
 void Level::Draw(SDL_Renderer* renderer, SDL_Texture* texture) const {

@@ -16,6 +16,8 @@ public:
 	void Inits(Entity* entity);
 	void Updates(Entity* entity);
 	void CheckCollision(Entity* entity);
+
+	void Updates(std::vector<Entity>& entity);
 };
 
 static const int DEFAULT_STEP_COEF = 5;

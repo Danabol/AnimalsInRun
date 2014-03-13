@@ -56,3 +56,15 @@ void CollisionController::CheckCollision(Entity* entity) {
 		entities += this->count_x - x_index - 1; // TODO: Check.
 	}
 }
+
+void CollisionController::Updates(std::vector<Entity>& entities) {
+	for(auto it_i = entities.begin(); it_i < entities.end() - 1; ++it_i) {
+		for(auto it_j = it_i + 1; it_j < entities.end(); ++it_j) {
+			collision(*it_i, *it_j);
+		}
+	}
+
+	//for(auto it = this->entities.begin(); it < this->entities.end(); ++it) {
+	//	this->collision_controller.CheckCollision(&(*it));
+	//}
+}
