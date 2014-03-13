@@ -5,9 +5,11 @@
 
 class EntityController {
 public:
-	Entity* Entity;
+	Entity* entity;
 
 public:
+	EntityController();
+
 	void DoStep() const;
 };
 

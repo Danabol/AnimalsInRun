@@ -15,7 +15,9 @@ Level::Level(uint8_t count, uint8_t index, bool random_init)
 				this->collision_controller.Inits(static_cast<Entity*>(&it[0]));
 			}
 		}
-		this->entity_controller.Entity = &this->entities[index];
+		if(index < this->entities.size()) {
+			this->entity_controller.entity = &this->entities[index];
+		}
 }
 
 Level::~Level() {
@@ -49,22 +51,24 @@ void Level::DoStep() {
 
 void Level::Draw(SDL_Renderer* renderer, SDL_Texture* texture) const {
 	if(renderer) {
-		const Entity& entity = *this->entity_controller.Entity;
-		this->map.Draw(renderer, entity, this->screen_center_x, this->screen_center_y);
+		const Entity* entity = this->entity_controller.entity;
+		if(entity) {
+			this->map.Draw(renderer, *entity, this->screen_center_x, this->screen_center_y);
 
-		float angle_rad = entity.angle * TO_RAD;
-		float sin_angle_rad = std::sin(angle_rad);
-		float cos_angle_rad = std::cos(angle_rad);
+			float angle_rad = entity->angle * TO_RAD;
+			float sin_angle_rad = std::sin(angle_rad);
+			float cos_angle_rad = std::cos(angle_rad);
 
-		EntityViewer entity_viewer;
-		for(auto it = this->entities.begin(); it < this->entities.end(); ++it) {
-			entity_viewer.r = it->r;
-			float x = it->px - entity.px;
-			float y = it->py - entity.py;;
-			entity_viewer.px = this->screen_center_x + sin_angle_rad * x - cos_angle_rad * y;
-			entity_viewer.py = this->screen_center_y + cos_angle_rad * x + sin_angle_rad * y;
-			entity_viewer.angle = it->angle - entity.angle;
-			entity_viewer.Draw(renderer, texture);
+			EntityViewer entity_viewer;
+			for(auto it = this->entities.begin(); it < this->entities.end(); ++it) {
+				entity_viewer.r = it->r;
+				float x = it->px - entity->px;
+				float y = it->py - entity->py;;
+				entity_viewer.px = this->screen_center_x + sin_angle_rad * x - cos_angle_rad * y;
+				entity_viewer.py = this->screen_center_y + cos_angle_rad * x + sin_angle_rad * y;
+				entity_viewer.angle = it->angle - entity->angle;
+				entity_viewer.Draw(renderer, texture);
+			}
 		}
 	}
 }
