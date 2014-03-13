@@ -2,10 +2,11 @@
 
 #include "entity_viewer.hpp"
 
-Map::Map(uint32_t count_x, uint32_t count_y) {
-	this->count_x = count_x;
-	this->count_y = count_y;
-	this->cells.resize(this->count_x * this->count_y);
+Map::Map(uint32_t count_x, uint32_t count_y)
+	: size_x(DEFAULT_SIZE_X), size_y(DEFAULT_SIZE_Y) {
+		this->count_x = count_x;
+		this->count_y = count_y;
+		this->cells.resize(this->count_x * this->count_y);
 }
 
 Map::~Map() {
@@ -34,9 +35,11 @@ void Map::Load(const ViewerSdl& viewer, const std::string& filename)
 		this->textures.push_back(viewer.CreateTexture(file_path));
 	}
 
+	input >> this->size_x;
+	input >> this->size_y;
+
 	input >> this->count_x;
 	input >> this->count_y;
-
 	this->cells.resize(this->count_x * this->count_y);
 	for(auto it = this->cells.begin(); it < this->cells.end(); ++it) {
 		input >> *it;
@@ -64,12 +67,27 @@ void Map::Draw(SDL_Renderer* renderer, const Entity& entity, float screen_center
 					block.px = screen_center_x + sin_angle_rad * x - cos_angle_rad * y;
 					block.py = screen_center_y + cos_angle_rad * x + sin_angle_rad * y;
 					block.Draw(renderer, this->textures[*it - 1]);
-					}
+				}
 				++it;
 				py += DEFAULT_BLOCK_SIZE;
-				}
+			}
 			px += DEFAULT_BLOCK_SIZE;
 			py = 0.0f;
-			}
 		}
+	}
+}
+
+void Map::Updates(std::vector<Entity>& entities) const{
+	for(auto it = entities.begin(); it < entities.end(); ++it) {
+		it->px = std::max(it->px, it->r); it->px = std::min(it->px, this->size_x - it->r);
+		it->py = std::max(it->py, it->r); it->py = std::min(it->py, this->size_y - it->r);
+	}
+}
+
+void Map::InitsRandom(std::vector<Entity>& entities) const{
+	for(auto it = entities.begin(); it < entities.end(); ++it) {
+		it->angle = static_cast<float>(rand() % 360);
+		it->px = 1.0f * rand() / RAND_MAX * this->size_x;
+		it->py = 1.0f * rand() / RAND_MAX * this->size_y;
+	}
 }

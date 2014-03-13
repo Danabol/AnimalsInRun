@@ -35,6 +35,11 @@
     <ClCompile Include="map.cpp" />
     <ClCompile Include="viewer_sdl.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\block.bmp" />
+    <None Include="resources\entity.bmp" />
+    <None Include="resources\map.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{868942D8-9489-41EE-B557-F6DD7894D3D8}</ProjectGuid>
     <RootNamespace>AnimalsInRun</RootNamespace>

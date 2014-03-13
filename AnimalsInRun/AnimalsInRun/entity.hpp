@@ -13,10 +13,6 @@ public:
 public: //CircleEntity
 	float r;
 
-public: // MapEntity
-	uint16_t i;
-	uint8_t j;
-
 public:
 	Entity();
 	~Entity();

@@ -3,33 +3,15 @@
 CollisionController::CollisionController()
 	: count_x(DEFAULT_COUNT_X), count_y(DEFAULT_COUNT_Y), step_coef(DEFAULT_STEP_COEF) {
 
-	this->cells.resize(this->count_x * this->count_y);
+		this->cells.resize(this->count_x * this->count_y);
 }
 
 CollisionController::~CollisionController() {
 }
 
-void CollisionController::Inits(Entity* entity) {
-	uint8_t x_index = static_cast<uint8_t>(entity->px) >> this->step_coef;
-	uint8_t y_index = static_cast<uint8_t>(entity->py) >> this->step_coef;
-	// TODO: if(0 <= x_index && x_index < this->count_x && 0 <= y_index && y_index < this->count_y)
-	entity->i = x_index + this->count_x * y_index;
-	entity->j = static_cast<uint8_t>(this->cells[entity->i].size());
-	this->cells[entity->i].push_back(entity);
-}
-
-void CollisionController::Updates(Entity* entity) {
-	std::vector<Entity*>& entities = this->cells[entity->i];
-	std::iter_swap(entities.begin() + entity->j, entities.begin() + entities.size() - 1);
-	entities[entity->j]->j = entity->j;
-	entities.pop_back();
-
-	this->Inits(entity);
-}
-
-void CollisionController::CheckCollision(Entity* entity) {
-	uint16_t x_index = entity->i % this->count_x;
-	uint16_t y_index = entity->i / this->count_x;
+void CollisionController::Updates(Entity& entity, uint32_t cell_index) {
+	uint16_t x_index = cell_index % this->count_x;
+	uint16_t y_index = cell_index / this->count_x;
 
 	uint16_t step = 1; // TODO: Find right value.
 
@@ -45,15 +27,18 @@ void CollisionController::CheckCollision(Entity* entity) {
 		y_index_end = this->count_y - 1;
 	}
 
-	std::vector<Entity*>* entities = &(this->cells[y_index * this->count_x + x_index]);
+	auto cell_it = this->cells.begin() + y_index * this->count_x + x_index;
 	for(uint16_t ix = x_index; ix <= x_index_end; ++ix) {
+		auto cell_it_temp = cell_it;
 		for(uint16_t iy = y_index; iy <= y_index_end; ++iy) {
-			for(auto it = entities->begin(); it < entities->end(); ++it) {
-				collision(*entity, **it);
+			for(auto it = cell_it->begin(); it < cell_it->end(); ++it) {
+				if(&entity != *it) {
+					collision(entity, **it);
+				}
 			}
-			++entities;
+			++cell_it;
 		}
-		entities += this->count_x - x_index - 1; // TODO: Check.
+		cell_it = cell_it_temp + this->count_x; // TODO: Index out of range exception.
 	}
 }
 
@@ -63,8 +48,26 @@ void CollisionController::Updates(std::vector<Entity>& entities) {
 			collision(*it_i, *it_j);
 		}
 	}
+}
 
-	//for(auto it = this->entities.begin(); it < this->entities.end(); ++it) {
-	//	this->collision_controller.CheckCollision(&(*it));
-	//}
+void CollisionController::UpdatesOpt(std::vector<Entity>& entities) {
+	for(auto it = this->cells.begin(); it < this->cells.end(); ++it) {
+		it->clear();
+	}
+	this->indeces.clear();
+
+	for(auto it = entities.begin(); it < entities.end(); ++it) {
+		uint32_t x_index = static_cast<uint32_t>(it->px) >> this->step_coef;
+		uint32_t y_index = static_cast<uint32_t>(it->py) >> this->step_coef;
+		// TODO: if(0 <= x_index && x_index < this->count_x && 0 <= y_index && y_index < this->count_y)
+		uint32_t index = y_index * this->count_x + x_index;
+		this->cells[index].push_back(&(*it));
+		this->indeces.push_back(index); // TODO: this->indeces.capacity = entities.size() if less.
+	}
+
+	auto it = entities.begin();
+	auto iti = this->indeces.begin();
+	for(; it < entities.end() && iti < this->indeces.end(); ++it, ++iti) {
+		this->Updates(*it, *iti);
+	}
 }

@@ -13,6 +13,9 @@
     <Filter Include="Screens">
       <UniqueIdentifier>{e4ba05fb-79a4-4bc5-86a6-03492dd84a43}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{d9b56472-a658-4011-bee6-b62bd6f14524}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="_.hpp">
@@ -80,5 +83,16 @@
     <ClCompile Include="entity_controller.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\block.bmp">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\entity.bmp">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\map.txt">
+      <Filter>Resources</Filter>
+    </None>
   </ItemGroup>
 </Project>

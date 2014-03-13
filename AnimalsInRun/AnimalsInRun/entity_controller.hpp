@@ -5,12 +5,12 @@
 
 class EntityController {
 public:
-	Entity* entity;
+	Entity entity;
 
 public:
 	EntityController();
 
-	void DoStep() const;
+	void DoStep();
 };
 
 #endif // ENTITY_CONTROLLER_H

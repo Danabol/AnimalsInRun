@@ -9,18 +9,20 @@
 
 class Level {
 private:
-	float size_x, size_y;
 	float screen_center_x, screen_center_y;
 
 	Map map;
 
+	uint32_t entity_index;
 	std::vector<Entity> entities;
 	EntityController entity_controller;
 
 	CollisionController collision_controller;
 
+	void RandomEntityChange();
+
 public:
-	Level(uint8_t count = 1, uint8_t index = 0, bool random_init = false);
+	Level();
 	~Level();
 
 	void DoStep();
@@ -28,10 +30,9 @@ public:
 
 	void LoadMap(const ViewerSdl& viewer, const std::string& filename);
 
+	void AddBots(uint8_t count, bool random_init = false);
+
 	void SetScreenCenter(float screen_center_x, float screen_center_y);
 };
-
-const float DEFAULT_SIZE_X = 1000.0f;
-const float DEFAULT_SIZE_Y = 1000.0f;
 
 #endif // LEVEL_H
