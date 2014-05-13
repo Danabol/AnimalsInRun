@@ -13,12 +13,15 @@
   <ItemGroup>
     <ClInclude Include="base.hpp" />
     <ClInclude Include="entity.hpp" />
+    <ClInclude Include="entity_.h" />
     <ClInclude Include="entity_viewer.hpp" />
     <ClInclude Include="game.hpp" />
     <ClInclude Include="entity_controller.hpp" />
     <ClInclude Include="level.hpp" />
     <ClInclude Include="collision_controller.hpp" />
     <ClInclude Include="map.hpp" />
+    <ClInclude Include="map_factory.hpp" />
+    <ClInclude Include="map_viewer.hpp" />
     <ClInclude Include="settings.hpp" />
     <ClInclude Include="viewer_sdl.hpp" />
     <ClInclude Include="_.hpp" />
@@ -33,6 +36,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="collision_controller.cpp" />
     <ClCompile Include="map.cpp" />
+    <ClCompile Include="map_factory.cpp" />
+    <ClCompile Include="map_viewer.cpp" />
     <ClCompile Include="viewer_sdl.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +81,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

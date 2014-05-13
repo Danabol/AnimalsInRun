@@ -51,6 +51,15 @@
     <ClInclude Include="entity_controller.hpp">
       <Filter>Entities</Filter>
     </ClInclude>
+    <ClInclude Include="entity_.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="map_factory.hpp">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="map_viewer.hpp">
+      <Filter>Screens</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base.cpp">
@@ -82,6 +91,12 @@
     </ClCompile>
     <ClCompile Include="entity_controller.cpp">
       <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="map_factory.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="map_viewer.cpp">
+      <Filter>Screens</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

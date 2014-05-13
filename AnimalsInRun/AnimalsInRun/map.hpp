@@ -1,34 +1,43 @@
-#ifndef MAP_H
-#define MAP_H
+#ifndef MAP_HPP
+#define MAP_HPP
 
 #include "_.hpp"
-#include "entity.hpp"
 
 class Map {
 private:
-	std::vector<SDL_Texture*> textures;
+	class Entity {
+	public:
+		static const uint8_t MIN_ROTATION = 0;
+		static const uint8_t MAX_ROTATION = 3;
 
-	float size_x, size_y;
+	public:
+		uint32_t position;
+		uint32_t rotation;
+		std::vector<uint32_t> commands;
+		uint32_t position_next;
+		bool can_move;
+	};
 
+private:
 	uint32_t count_x, count_y;
 	std::vector<uint32_t> cells;
+
+	std::vector<Entity> entities;
+	std::vector<uint32_t> cells_entities;
 
 	void Clear();
 
 public:
-	Map(uint32_t count_x = 0, uint32_t count_y = 0);
-	~Map();
+	Map();
 
-	void Load(const ViewerSdl& viewer, const std::string& filename);
-	void Draw(SDL_Renderer* renderer, const Entity& entity, float screen_center_x, float screen_center_y) const;
+public:
+	void AddEntity(uint32_t id);
+	void RemoveEntity(uint32_t id);
 
-	void Updates(std::vector<Entity>& entity) const;
+	void Update();
 
-	void InitsRandom(std::vector<Entity>& entity) const;
+	friend class MapFactory;
+	friend class MapViewer;
 };
 
-const float DEFAULT_SIZE_X = 1000.0f;
-const float DEFAULT_SIZE_Y = 1000.0f;
-const uint8_t DEFAULT_BLOCK_SIZE = 32;
-
-#endif // MAP_H
+#endif // MAP_HPP
