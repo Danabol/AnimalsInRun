@@ -21,6 +21,7 @@ private:
 private:
 	uint32_t count_x, count_y;
 	std::vector<uint32_t> cells;
+	
 
 	std::vector<Entity> entities;
 	std::vector<uint32_t> cells_entities;
@@ -33,8 +34,8 @@ public:
 public:
 	void AddEntity(uint32_t id);
 	void RemoveEntity(uint32_t id);
-
 	void Update();
+
 
 	friend class MapFactory;
 	friend class MapViewer;
