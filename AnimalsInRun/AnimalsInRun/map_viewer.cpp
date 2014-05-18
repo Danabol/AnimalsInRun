@@ -1,7 +1,5 @@
 #include "map_viewer.hpp"
 
-#include "entity_viewer.hpp"
-
 MapViewer::MapViewer()
   : textures(0) {
 }
@@ -13,74 +11,35 @@ MapViewer::~MapViewer() {
 	this->textures.clear();
 }
 
-//void MapViewer::Draw(SDL_Renderer* renderer, const Map& map, const Entity& entity, float screen_center_x, float screen_center_y) const {
-//	if(renderer) {
-//		EntityViewer block;
-//		block.angle = -entity.angle;
-//		block.r = DEFAULT_CELL_SIZE >> 1;
-//
-//		float angle_rad = entity.angle * TO_RAD;
-//		float sin_angle_rad = std::sin(angle_rad);
-//		float cos_angle_rad = std::cos(angle_rad);
-//
-//		float px = 0.0f;
-//		float py = 0.0f;
-//		auto it = map.cells.begin();
-//		for (uint32_t i = 0; i < map.count_x; ++i) {
-//			for (uint32_t j = 0; j < map.count_y; ++j) {
-//				if(*it) {
-//					float x = px - entity.px;
-//					float y = py - entity.py;
-//					block.px = screen_center_x + sin_angle_rad * x - cos_angle_rad * y;
-//					block.py = screen_center_y + cos_angle_rad * x + sin_angle_rad * y;
-//					if(*it - 1 < this->textures.size()) {
-//						block.Draw(renderer, 0, 0, 255);
-//					}
-//					else {
-//						block.Draw(renderer, this->textures[*it - 1]);
-//					}
-//				}
-//				++it;
-//				py += DEFAULT_CELL_SIZE;
-//			}
-//			px += DEFAULT_CELL_SIZE;
-//			py = 0.0f;
-//		}
-//	}
-//}
-
-void MapViewer::Draw(SDL_Renderer* renderer, const Map& map, const Entity& entity, float screen_center_x, float screen_center_y) const {
+void MapViewer::Draw(SDL_Renderer* renderer, const Map& map, uint32_t screen_size_x, uint32_t screen_size_y, float x, float y, float angle) const {
 	if(renderer) {
-		EntityViewer block;
-		block.angle = -entity.angle;
-		block.r = DEFAULT_CELL_SIZE >> 1;
+	  uint8_t r = 0; // TODO: Add to resorces.
+	  uint8_t g = 0; // TODO: Add to resorces.
+	  uint8_t b = 255; // TODO: Add to resorces.
+	  uint8_t a = 0; // TODO: Add to resorces.
 
-		float px = 0.0f;
-		float py = 0.0f;
+		float px, py;
 		auto it = map.cells.begin();
-		for (uint32_t i = 0; i < map.count_x; ++i) {
-			for (uint32_t j = 0; j < map.count_y; ++j) {
+		py = 0.0f;
+		for (uint32_t iy = 0; iy < map.count_y; ++iy) {
+			px = 0.0f;
+			for (uint32_t ix = 0; ix < map.count_x; ++ix) {
 				if(*it) {
-					float x = px - entity.px;
-					float y = py - entity.py;
-					block.px = screen_center_x + x;
-					block.py = screen_center_y + y;
-					if(*it - 1 >= this->textures.size()) {
-						block.Draw(renderer, 0, 0, 255);
-					}
-					else {
-						block.Draw(renderer, this->textures[*it]);
-					}
+				  SDL_SetRenderDrawColor(renderer, r, g, b, a);
+					SDL_Rect rect;
+					rect.x = (screen_size_x >> 1) + (int)(px - x);
+					rect.y = (screen_size_y >> 1) + (int)(py - y);
+					rect.w = rect.h = cell_size;
+					SDL_RenderFillRect(renderer, &rect);
+
 				}
 				++it;
-				py += DEFAULT_CELL_SIZE;
+				px += cell_size;
 			}
-			px += DEFAULT_CELL_SIZE;
-			py = 0.0f;
+			py += cell_size;
 		}
 	}
 }
-
 
 void MapViewer::CreateVector(Map& map)
 {
@@ -142,7 +101,7 @@ void MapViewer::LoadFromFile( const std::string& filename, Map& map)
 
 }
 
-void MapViewer::DrawMap(SDL_Renderer* renderer, const Map& map, Camera& cam, uint32_t size, bool squares = false) const
+void MapViewer::DrawMap(SDL_Renderer* renderer, const Map& map, Camera& cam, uint32_t size, bool squares) const
 {
 	SDL_Rect rect = cam.GetCamera();
 	uint32_t squareX = (rect.w - rect.x)/ size;
@@ -179,5 +138,3 @@ void MapViewer::DrawSquares(SDL_Renderer* renderer, uint8_t r, uint8_t g, uint8_
 	SDL_SetRenderDrawColor(renderer, r, g, b, 0);
 	SDL_RenderFillRect(renderer, &rect);
 }
-
-

@@ -1,6 +1,11 @@
 #include "game.hpp"
 
-#include "level.hpp"
+//#include "level.hpp"
+#include "map.hpp"
+#include "map_factory.hpp"
+#include "map_viewer.hpp"
+
+#include "bot_auto_1.hpp"
 
 Game::Game() {
 	if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
@@ -28,16 +33,16 @@ void Game::Run() {
 	ViewerSdl viewer; viewer.Init(settings.title);
 	SDL_Renderer* renderer = viewer.GetRenderer();
 
-	// TODO: Init somes.
-	SDL_Texture* texture = nullptr;//viewer.CreateTexture("./resources/entity.bmp");
+	int screen_size_x, screen_size_y;
+	SDL_GetWindowSize(viewer.GetWindow(), &screen_size_x, &screen_size_y);
 
-	Level level;
-	level.LoadMap(viewer, "./resources/map.txt");
-	level.AddBots(50, true);
+	Map map;
+	MapFactory::InitsRandom(map, MapFactory::DEFAULT_COUNT_X, MapFactory::DEFAULT_COUNT_Y, MapFactory::DEFAULT_FILL_PERCENT);
 
-	int w, h;
-	SDL_GetWindowSize(viewer.GetWindow(), &w, &h);
-	level.SetScreenCenter(w >> 1, h >> 1);
+	MapViewer mapViewer;
+	mapViewer.SetCellSize(MapViewer::DEFAULT_CELL_SIZE);
+
+	BotAuto1 bot_auto_1(0, mapViewer.GetSizeX(map), 0, mapViewer.GetSizeY(map));
 
 	while(!quit) {
 		SDL_Event sdl_event;
@@ -57,17 +62,13 @@ void Game::Run() {
 		viewer.ClearViewer();
 
 		// TODO: somes.DoStep();
-		level.DoStep();
-		
+		bot_auto_1.DoStep();
+
 		if(renderer) {
-			level.Draw(renderer, texture);
-			// TODO: somes.Draw(viewer);
+		  // TODO: somes.Draw(viewer);
+		  mapViewer.Draw(renderer, map, screen_size_x, screen_size_y, bot_auto_1.GetPx(), bot_auto_1.GetPy(), bot_auto_1.GetAngle());
 		}
 
 		viewer.EndDraw();
-	}
-	//client.Clear();
-	if(texture) {
-		viewer.ReleaseTexture(texture);	texture = nullptr;
 	}
 }

@@ -3,8 +3,33 @@
 
 #include "_.hpp"
 #include "map.hpp"
-#include "entity.hpp"
-#include "camera.hpp"
+
+class Camera
+{
+public:
+  Camera() {
+    this->camera.x = this->camera.y = 0;
+    this->camera.h = this->camera.w = 320; // WARNING: Magic number.
+  }
+  Camera(int width, int height) {
+    this->camera.x = 0;
+    this->camera.y = 0;
+    this->camera.w = width;
+    this->camera.h = height;
+  }
+  Camera(const SDL_Rect& rect) {
+    this->camera.x = rect.x;
+    this->camera.y = rect.y;
+    this->camera.w = rect.w;
+    this->camera.h = rect.h;
+  }
+  SDL_Rect GetCamera() {
+    return this->camera;
+  }
+
+private:
+	SDL_Rect camera;
+};
 
 class MapViewer {
 public:
@@ -19,10 +44,24 @@ public:
 	MapViewer();
 	~MapViewer();
 
+  void SetCellSize(uint8_t cell_size) {
+    this->cell_size = cell_size;
+  }
+
+  uint32_t GetSizeX(const Map& map) const {
+    return this->cell_size * map.count_x;
+  }
+
+  uint32_t GetSizeY(const Map& map) const {
+    return this->cell_size * map.count_y;
+  }
+
+        void Draw(SDL_Renderer* renderer, const Map& map, uint32_t screen_size_x, uint32_t screen_size_y, float x, float y, float angle) const;
+
+
 	void CreateVector(Map& map);
 	void Load(const ViewerSdl& viewer, const std::string& filename);
 	void LoadFromFile(const std::string& filename, Map& map);
-	void Draw(SDL_Renderer* renderer, const Map& map, const Entity& entity, float screen_center_x, float screen_center_y) const;
 	void DrawMap(SDL_Renderer* renderer, const Map& map, Camera& camera, uint32_t size, bool squares = false) const;
 	void DrawSquares(SDL_Renderer* renderer, uint8_t r, uint8_t g, uint8_t b , SDL_Rect) const;
 
